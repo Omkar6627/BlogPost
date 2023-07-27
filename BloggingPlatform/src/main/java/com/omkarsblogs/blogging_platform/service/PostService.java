@@ -1,0 +1,58 @@
+package com.omkarsblogs.blogging_platform.service;
+
+import com.omkarsblogs.blogging_platform.model.Post;
+import com.omkarsblogs.blogging_platform.model.User;
+import com.omkarsblogs.blogging_platform.repos.PostRepository;
+
+
+import java.time.LocalDateTime;
+import java.util.List;
+
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import org.springframework.stereotype.Service;
+
+
+@Service
+public class PostService {
+
+    @Autowired
+    PostRepository postRepo;
+
+    public String createPost(Post post) {
+        post.setDateCreated(LocalDateTime.now());
+        postRepo.save(post);
+        return "Post uploaded!!!!";
+    }
+
+    public String removePost(Long postId, User user) {
+
+        Post post  = postRepo.findById(postId).orElse(null);
+        if(post != null && post.getPostOwner().equals(user))
+        {
+            postRepo.deleteById(postId);
+            return "Removed successfully";
+        }
+        else if (post == null)
+        {
+            return "Post to be deleted does not exist";
+        }
+        else{
+            return "Un-Authorized delete detected....Not allowed";
+        }
+    }
+
+    public boolean validatePost(Post Post) {
+        return (Post!=null && postRepo.existsById(Post.getPostId()));
+    }
+
+
+    public Post getPostById(Long id) {
+        return postRepo.findById(id).orElse(null);
+    }
+
+    public List<Post> getAllPosts() {
+        return postRepo.findAll();
+    }
+}
