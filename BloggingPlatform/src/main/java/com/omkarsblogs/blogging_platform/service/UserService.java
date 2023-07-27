@@ -277,10 +277,10 @@ public class UserService {
         }
     }
 
-    public List<Comment> getCommentById(Long postId) {
+    public List<Comment> getCommentById(Long postId,Integer PageNumber,Integer PageSize) {
 
 
-      List<Comment> comment = commentService.getAllCommentsForPost(postId);
+      List<Comment> comment = commentService.getAllCommentsForPost(postId,PageNumber,PageSize);
 
 
             return comment;
@@ -307,7 +307,8 @@ public class UserService {
     }
 
 
-    public List<Post> getAllPosts() {
-        return postService.getAllPosts();
+
+    public List<Post> getAllPosts(Integer pageNumber, Integer pageSize) {
+        return postService.getAllPosts(pageNumber,pageSize);
     }
 }

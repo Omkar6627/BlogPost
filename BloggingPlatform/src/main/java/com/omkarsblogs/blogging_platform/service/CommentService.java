@@ -2,6 +2,7 @@ package com.omkarsblogs.blogging_platform.service;
 
 import com.omkarsblogs.blogging_platform.model.Comment;
 
+import com.omkarsblogs.blogging_platform.model.Post;
 import com.omkarsblogs.blogging_platform.repos.CommentRepository;
 
 
@@ -10,6 +11,9 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 
@@ -33,9 +37,13 @@ public class CommentService {
         commentRepo.delete(comment);
     }
 
-    public List<Comment> getAllCommentsForPost(Long postId) {
+    public List<Comment> getAllCommentsForPost(Long postId,Integer PageNumber,Integer PageSize) {
+        Pageable p= PageRequest.of(PageNumber,PageSize);
+        Page<Comment> Comments=commentRepo.findByBlogPostPostId(postId,p);
+        List<Comment>content =Comments.getContent();
 
-        return commentRepo.findByBlogPostPostId(postId);
+        return content;
+
     }
 
 }

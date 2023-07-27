@@ -5,6 +5,8 @@ import com.omkarsblogs.blogging_platform.service.AuthenticationTokenService;
 import com.omkarsblogs.blogging_platform.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -110,9 +112,9 @@ public class UserController {
         }
     }
     @GetMapping("post")
-    public List <Post> getPost() {
-
-            return userService.getAllPosts();
+    public List <Post> getPost(@RequestParam Integer PageNumber,@RequestParam Integer PageSize) {
+   List<Post> allpost=this.userService.getAllPosts(PageNumber,PageSize);
+            return allpost;
 
     }
     @PutMapping("post/{postId}")
@@ -124,9 +126,10 @@ public class UserController {
         }
     }
     @GetMapping("comment/{postId}")
-    public List<Comment> getCommentById(@PathVariable Long postId) {
+    public List<Comment> getCommentById(@PathVariable Long postId,@RequestParam Integer PageNumber,@RequestParam Integer PageSize) {
+        List<Comment> allcomment=this.userService.getCommentById(postId,PageNumber,PageSize);
+        return allcomment;
 
-            return userService.getCommentById(postId);
 
     }
     @PutMapping("comment/{commentId}")

@@ -11,6 +11,9 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 
@@ -52,7 +55,10 @@ public class PostService {
         return postRepo.findById(id).orElse(null);
     }
 
-    public List<Post> getAllPosts() {
-        return postRepo.findAll();
+    public List<Post> getAllPosts(Integer pageNumber, Integer pageSize) {
+        Pageable p= PageRequest.of(pageNumber,pageSize);
+        Page<Post>PagePost=this.postRepo.findAll(p);
+                List<Post>content =PagePost.getContent();
+        return content;
     }
 }
