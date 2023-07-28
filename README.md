@@ -47,7 +47,7 @@ Blogging Platform is a backend project that aims to provide a robust and scalabl
 ## Installation
 
 1. Clone the repository from [GitHub link](https://github.com/Omkar6627/BlogPost.git).
-2. Install Java JDK and Gradle on your machine.
+2. Install Java JDK and Maven on your machine.
 3. Set up a MySQL database and configure the database connection in the application.properties file.
 4. Run the Maven build to compile the project.
 5. Start the application using the command.
